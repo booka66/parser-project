@@ -24,6 +24,22 @@ def choose_file():
     return "data/" + file_name + ".pdb"
 
 
+def view_chain(chains):
+    chainID = None
+    while chainID == None:
+        chainID = input("Enter a chainID to view: ")
+        if chainID in chains:
+            print(f"Chain {chainID}:")
+            for group in chains[chainID].sequence:
+                print(f"{group.name}: ", end="")
+                for atom in group.formula:
+                    print(f"{atom.name} ", end="")
+                print()
+        else:
+            print("Invalid chainID.")
+            chainID = None
+
+
 def main():
     atoms, group, chains = parser.run(choose_file())
     print("\nAmino Acids:")
@@ -38,6 +54,7 @@ def main():
     for chain in chains:
         print(f"{chains[chain].chainID}")
     print(f"\n{len(atoms)} Atoms")
+    view_chain(chains)
 
 
 if __name__ == "__main__":
